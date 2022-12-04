@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=argo
+Exec=argo
+Icon=io.github.jmdaemon.argo
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

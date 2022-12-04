@@ -1,0 +1,4 @@
+data/io.github.jmdaemon.argo.desktop.in
+data/io.github.jmdaemon.argo.appdata.xml.in
+data/io.github.jmdaemon.argo.gschema.xml
+src/window.ui
