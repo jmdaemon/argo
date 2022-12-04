@@ -1,4 +1,3 @@
-#pkgdatadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
 pkgdatadir = 'src'
 gnome = import('gnome')
 
@@ -12,7 +11,6 @@ gnome.compile_resources('argo',
 conf = configuration_data()
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('GETTEXT_PACKAGE', 'argo')
-#conf.set_quoted('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
 conf.set_quoted('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
 conf.set_quoted('PKGDATADIR', pkgdatadir)
 

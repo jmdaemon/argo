@@ -26,7 +26,7 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, gtk::CompositeTemplate)]
-    #[template(resource = "/io/github/jmdaemon/argo/window.ui")]
+    #[template(resource = "/io/github/jmdaemon/argo/resources/gtk/window.ui")]
     pub struct ArgoWindow {
         // Template widgets
         #[template_child]
