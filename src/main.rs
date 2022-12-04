@@ -18,12 +18,11 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-mod application;
+mod widgets;
 mod config;
-mod window;
 
-use self::application::ArgoApplication;
-use self::window::ArgoWindow;
+use self::widgets::application::ArgoApplication;
+use self::widgets::window::ArgoWindow;
 
 use config::{GETTEXT_PACKAGE, LOCALEDIR, PKGDATADIR};
 use gettextrs::{bind_textdomain_codeset, bindtextdomain, textdomain};
