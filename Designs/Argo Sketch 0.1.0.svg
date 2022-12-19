@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="400mm"
+   height="600mm"
+   viewBox="0 0 400 600"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
+   sodipodi:docname="Argo Sketch 0.1.0.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.76880612"
+     inkscape:cx="719.94745"
+     inkscape:cy="431.8384"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#0000ff;fill-rule:evenodd;stroke-width:0.393603"
+       id="rect111"
+       width="304.99454"
+       height="11.638784"
+       x="69.20961"
+       y="27.905407" />
+    <rect
+       style="fill:#ff5555;fill-rule:evenodd;stroke-width:0.91102"
+       id="rect430"
+       width="63.903114"
+       height="242.53012"
+       x="5.3064976"
+       y="39.544193" />
+    <rect
+       style="fill:#00ff00;stroke-width:0.521159"
+       id="rect486"
+       width="304.97665"
+       height="242.11946"
+       x="69.20961"
+       y="40.028641" />
+    <rect
+       style="fill:#ffff00;stroke-width:0.453378"
+       id="rect716"
+       width="100.74359"
+       height="242.11945"
+       x="273.44269"
+       y="40.028648" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="194.79884"
+       y="35.948715"
+       id="text772"><tspan
+         sodipodi:role="line"
+         id="tspan770"
+         style="stroke-width:0.264583"
+         x="194.79884"
+         y="35.948715">Search Bar</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.6357508"
+       y="60.918507"
+       id="text826"><tspan
+         sodipodi:role="line"
+         id="tspan824"
+         style="stroke-width:0.264583"
+         x="5.6357508"
+         y="60.918507">Quick Access</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.264583"
+         x="5.6357508"
+         y="74.147629"
+         id="tspan830">Bookmarks</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="100.63022"
+       y="60.656071"
+       id="text852"><tspan
+         sodipodi:role="line"
+         id="tspan850"
+         style="stroke-width:0.264583"
+         x="100.63022"
+         y="60.656071">Files Viewer with Thumbnails</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="302.77484"
+       y="59.376381"
+       id="text865"><tspan
+         sodipodi:role="line"
+         id="tspan863"
+         style="stroke-width:0.264583"
+         x="302.77484"
+         y="59.376381">Tags Panel</tspan></text>
+  </g>
+</svg>
