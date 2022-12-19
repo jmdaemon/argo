@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
-   sodipodi:docname="Argo Sketch 0.1.0.svg"
+   sodipodi:docname="Argo Interface.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,9 +24,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.76880612"
-     inkscape:cx="719.94745"
-     inkscape:cy="431.8384"
+     inkscape:zoom="0.78071003"
+     inkscape:cx="716.65533"
+     inkscape:cy="563.58953"
      inkscape:current-layer="layer1" />
   <defs
      id="defs2" />
@@ -49,19 +49,19 @@
        x="5.3064976"
        y="39.544193" />
     <rect
-       style="fill:#00ff00;stroke-width:0.521159"
+       style="fill:#00ff00;stroke-width:0.492096"
        id="rect486"
        width="304.97665"
-       height="242.11946"
+       height="215.8681"
        x="69.20961"
-       y="40.028641" />
+       y="52.875198" />
     <rect
-       style="fill:#ffff00;stroke-width:0.453378"
+       style="fill:#ffff00;stroke-width:0.428094"
        id="rect716"
        width="100.74359"
-       height="242.11945"
+       height="215.86809"
        x="273.44269"
-       y="40.028648" />
+       y="52.875198" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -76,40 +76,94 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="5.6357508"
-       y="60.918507"
+       x="5.1483335"
+       y="47.587502"
        id="text826"><tspan
          sodipodi:role="line"
          id="tspan824"
          style="stroke-width:0.264583"
-         x="5.6357508"
-         y="60.918507">Quick Access</tspan><tspan
+         x="5.1483335"
+         y="47.587502">Quick Access</tspan><tspan
          sodipodi:role="line"
          style="stroke-width:0.264583"
-         x="5.6357508"
-         y="74.147629"
+         x="5.1483335"
+         y="60.816624"
          id="tspan830">Bookmarks</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="100.63022"
-       y="60.656071"
+       x="97.137482"
+       y="60.918507"
        id="text852"><tspan
          sodipodi:role="line"
          id="tspan850"
          style="stroke-width:0.264583"
-         x="100.63022"
-         y="60.656071">Files Viewer with Thumbnails</tspan></text>
+         x="97.137482"
+         y="60.918507">Files (Thumbnails and Text)</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="302.77484"
-       y="59.376381"
+       x="297.76898"
+       y="60.918507"
        id="text865"><tspan
          sodipodi:role="line"
          id="tspan863"
          style="stroke-width:0.264583"
-         x="302.77484"
-         y="59.376381">Tags Panel</tspan></text>
+         x="297.76898"
+         y="60.918507">Tags Panel</tspan></text>
+    <rect
+       style="fill:#008000;stroke-width:0.264583"
+       id="rect278"
+       width="304.97665"
+       height="13.331005"
+       x="69.20961"
+       y="39.544193" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="201.41504"
+       y="47.587502"
+       id="text384"><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.264583"
+         x="201.41504"
+         y="47.587502"
+         id="tspan386">Tool Bar</tspan></text>
+    <rect
+       style="fill:#ff00ff;stroke-width:0.264583"
+       id="rect464"
+       width="63.903111"
+       height="11.638786"
+       x="5.3064971"
+       y="27.905407" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="17.176235"
+       y="35.461884"
+       id="text468"><tspan
+         sodipodi:role="line"
+         id="tspan466"
+         style="stroke-width:0.264583"
+         x="17.176235"
+         y="35.461884">Nav Bar</tspan></text>
+    <rect
+       style="fill:#f4d7d7;stroke-width:0.264583"
+       id="rect952"
+       width="304.97665"
+       height="13.331023"
+       x="69.20961"
+       y="268.74329" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="108.74771"
+       y="276.78659"
+       id="text956"><tspan
+         sodipodi:role="line"
+         id="tspan954"
+         style="stroke-width:0.264583"
+         x="108.74771"
+         y="276.78659">Directory / Item Summary</tspan></text>
   </g>
 </svg>
