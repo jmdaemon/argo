@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
+<cambalache-project version="0.10.3" target_tk="gtk-4.0">
+  <ui>
+	(1,1,"argo.cmb","mainwidget.ui",None,None,None,None,None,None),
+	(2,1,None,"window.ui",None,None,None,None,None,None)
+  </ui>
+  <object>
+	(1,1,"GtkGrid","MainWidget",None,None,None,None,None),
+	(1,2,"GtkListView","lv_bookmarks",1,None,None,None,None),
+	(1,4,"GtkGridView","gv_files",1,None,None,None,2),
+	(1,5,"GtkNotebook","nb_sidebar",1,None,None,None,3),
+	(1,6,"GtkNotebookPage","nb_page",None,None,None,None,None),
+	(1,7,"GtkSearchEntry","se_searchbar",1,None,None,None,None),
+	(2,1,"GtkApplicationWindow","ArgoWindow",None,None,None,None,None)
+  </object>
+  <object_property>
+	(2,1,"GtkWindow","default-height","300",None,None,None,None,None),
+	(2,1,"GtkWindow","default-width","600",None,None,None,None,None)
+  </object_property>
+  <object_layout_property>
+	(1,1,2,"GtkGridLayoutChild","row-span","3",None,None,None,None),
+	(1,1,4,"GtkGridLayoutChild","column","1",None,None,None,None),
+	(1,1,4,"GtkGridLayoutChild","column-span","1",None,None,None,None),
+	(1,1,4,"GtkGridLayoutChild","row","1",None,None,None,None),
+	(1,1,4,"GtkGridLayoutChild","row-span","1",None,None,None,None),
+	(1,1,5,"GtkGridLayoutChild","column","2",None,None,None,None),
+	(1,1,5,"GtkGridLayoutChild","column-span","1",None,None,None,None),
+	(1,1,5,"GtkGridLayoutChild","row","1",None,None,None,None),
+	(1,1,7,"GtkGridLayoutChild","column","1",None,None,None,None),
+	(1,1,7,"GtkGridLayoutChild","column-span","2",None,None,None,None),
+	(1,1,7,"GtkGridLayoutChild","row","0",None,None,None,None),
+	(1,1,7,"GtkGridLayoutChild","row-span","1",None,None,None,None)
+  </object_layout_property>
+</cambalache-project>

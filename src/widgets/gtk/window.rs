@@ -18,6 +18,10 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+// Import widgets
+use crate::widgets::gtk::mainwidget::imp::MainWidget;
+use crate::widgets::gtk::mainwidget::MainWidget as MW;
+
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
@@ -33,6 +37,8 @@ mod imp {
         pub header_bar: TemplateChild<gtk::HeaderBar>,
         #[template_child]
         pub label: TemplateChild<gtk::Label>,
+        
+        pub mainwidget: MainWidget,
     }
 
     #[glib::object_subclass]
@@ -41,13 +47,8 @@ mod imp {
         type Type = super::ArgoWindow;
         type ParentType = gtk::ApplicationWindow;
 
-        fn class_init(klass: &mut Self::Class) {
-            klass.bind_template();
-        }
-
-        fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
-            obj.init_template();
-        }
+        fn class_init(klass: &mut Self::Class) { klass.bind_template(); }
+        fn instance_init(obj: &glib::subclass::InitializingObject<Self>) { obj.init_template(); }
     }
 
     impl ObjectImpl for ArgoWindow {}
@@ -63,6 +64,12 @@ glib::wrapper! {
 
 impl ArgoWindow {
     pub fn new<P: glib::IsA<gtk::Application>>(application: &P) -> Self {
-        glib::Object::new(&[("application", application)])
+        //glib::Object::new(&[("application", application)])
+        let window: ArgoWindow = glib::Object::new(&[("application", application)]);
+        let mw = MW::new();
+
+        window.set_title(Some(&"Argo"));
+        window.set_child(Some(&mw));
+        window
     }
 }

@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.10.3 -->
+<interface>
+  <!-- interface-name argo.cmb -->
+  <requires lib="gtk" version="4.6"/>
+  <template class="MainWidget" parent="GtkGrid">
+    <child>
+      <object class="GtkListView" id="lv_bookmarks">
+        <layout>
+          <property name="column">0</property>
+          <property name="row">0</property>
+          <property name="row-span">3</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSearchEntry" id="se_searchbar">
+        <layout>
+          <property name="column">1</property>
+          <property name="column-span">2</property>
+          <property name="row">0</property>
+          <property name="row-span">1</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkGridView" id="gv_files">
+        <layout>
+          <property name="column">1</property>
+          <property name="column-span">1</property>
+          <property name="row">1</property>
+          <property name="row-span">1</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="GtkNotebook" id="nb_sidebar">
+        <layout>
+          <property name="column">2</property>
+          <property name="column-span">1</property>
+          <property name="row">1</property>
+        </layout>
+      </object>
+    </child>
+  </template>
+  <object class="GtkNotebookPage" id="nb_page"/>
+</interface>
