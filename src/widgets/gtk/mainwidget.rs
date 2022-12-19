@@ -12,33 +12,17 @@ pub mod imp {
     use super::*;
 
     #[derive(Debug, Default, CompositeTemplate)]
-    //#[template(resource = "/io/github/jmdaemon/argo/../resources/gtk/mainwidget.ui")]
     #[template(resource = "/io/github/jmdaemon/argo/resources/gtk/mainwidget.ui")]
     pub struct MainWidget {
-        //#[template_child]
-        //pub gc_toolbar: TemplateChild<gtk::CenterBox>,
-        //#[template_child]
-        //pub lv_bookmarks: TemplateChild<gtk::ListView>,
-
-        //pub lv_files: RefCell<gtk::ListView>,
-
-        //pub ts_toc: RefCell<gtk::ListStore>,
-
-        //#[template_child]
-        //pub gc_toolbar: TemplateChild<gtk::CenterBox>,
+        // Template components
         #[template_child]
         pub lv_bookmarks: TemplateChild<gtk::ListView>,
         #[template_child]
         pub se_searchbar: TemplateChild<gtk::SearchEntry>,
         #[template_child]
         pub gv_files: TemplateChild<gtk::GridView>,
-        //#[template_child]
-        //pub nb_sidebar: TemplateChild<gtk::GtkNotebook>,
         #[template_child]
         pub nb_sidebar: TemplateChild<gtk::Notebook>,
-
-
-        //pub lv_files: RefCell<gtk::ListView>,
     }
 
     #[glib::object_subclass]
@@ -53,9 +37,7 @@ pub mod imp {
     }
 
     impl ObjectImpl for MainWidget {
-        //fn constructed(&self, obj: &Self::Type) {
-        fn constructed(&self) {
-        }
+        fn constructed(&self) { }
     }
     impl WidgetImpl for MainWidget {}
     impl GridImpl for MainWidget {}
@@ -69,12 +51,6 @@ glib::wrapper! {
 
 impl MainWidget {
     pub fn new() -> Self {
-    //pub fn new<P: glib::IsA<gtk::Widget>>(widget: &P) -> Self {
-        //let mainwidget: MainWidget = glib::Object::new(&[imp::MainWidget]).expect("Failed to create MainWidget");
-        //mainwidget
-        //glib::Object::new(&["MainWidget", imp::MainWidget])
-        //glib::Object::new(&[("MainWidget", widget)])
-        //glib::Object::new(&[("MainWidget", imp::MainWidget])
         glib::Object::new(&[])
     }
 }
