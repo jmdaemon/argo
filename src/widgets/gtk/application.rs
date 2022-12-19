@@ -34,23 +34,6 @@ mod imp {
         // to do that, we'll just present any existing window.
         fn activate(&self) {
             let application = self.instance();
-            // Get the current window or create one if necessary
-            //let window = if let Some(window) = application.active_window() {
-                //window
-            //} else {
-                //let window = ArgoWindow::new(&*application);
-                //window.upcast()
-            //};
-
-            //let window = if let Some(window) = application.active_window() {
-            //let window = {
-                //ArgoWindow::new(&*application);
-                //window.upcast()
-            //}
-            //if let Some(window)
-            //let window = 
-            //let mut window = ArgoWindow::new(&*application);
-            //window = window.upcast();
             let window: ArgoWindow = ArgoWindow::new(&*application).upcast();
             window.present();
         }
