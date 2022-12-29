@@ -1,5 +1,10 @@
 # Interface
 
+How it works:
+
+When Argo starts up, it will open the current directory to the current user's /home/ directory.
+Listed will be the many files in that directory.
+
 Argo will offer various functions for use:
 1. Default file view mode
 2. Tagged / Structured file view mode
