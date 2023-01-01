@@ -4,11 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-gettext-rs = { version = "0.7", features = ["gettext-system"] }
-gtk = { version = "0.5", package = "gtk4", features=["v4_4"] }
-gdk = { version = "0.5", package = "gdk4", features=["v4_4"] }
-glib = { version = "0.16.4", package = "glib" }
-cairo = { version = "0.16.3", package = "cairo-rs" }
+#gettext-rs = { version = "0.7", features = ["gettext-system"] }
+#gtk = { version = "0.5", package = "gtk4", features=["v4_4"] }
+#gdk = { version = "0.5", package = "gdk4", features=["v4_4"] }
+#glib = { version = "0.16.4", package = "glib" }
+#cairo = { version = "0.16.3", package = "cairo-rs" }
 lazy_static = "1.4.0"
 once_cell = "1.16.0"
 arc-swap = "1.5.1"
+#relm4 = { version = "0.5.0-rc.1", features = ["libadwaita", "libpanel", "gnome_43"] }
+relm4 = { version = "0.5.0-rc.1", features = ["all"] }
