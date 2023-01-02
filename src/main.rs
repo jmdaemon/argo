@@ -1,38 +1,48 @@
-//use relm::Widget;
-//use argo::Win;
-
-use gtk::glib::clone;
-use gtk::prelude::{BoxExt, ButtonExt, GtkWindowExt};
+use gtk::prelude::{BoxExt, ButtonExt, GtkWindowExt, OrientableExt};
 use relm4::{gtk, ComponentParts, ComponentSender, RelmApp, RelmWidgetExt, SimpleComponent};
-use gtk::Inhibit;
 
 struct AppModel {
     selected_path: String,
 }
 
 #[derive(Debug)]
-enum AppInput {
+enum AppMsg {
     Quit,
 }
 
-struct AppWidgets {
-    label: gtk::Label,
-}
-
+#[relm4::component]
 impl SimpleComponent for AppModel {
-
-    type Input = AppInput;
-    type Output = ();
-    type Init = u8;
-    type Root = gtk::Window;
     type Widgets = AppWidgets;
+    type Init = u8;
+    type Input = AppMsg;
+    type Output = ();
 
-    fn init_root() -> Self::Root {
-        gtk::Window::builder()
-            .title("Argo") // TOOD: The title shown will be the current file path instead
-            .default_width(640)
-            .default_height(480)
-            .build()
+    view! {
+        gtk::Window {
+            set_title: Some("Argo"),
+            set_default_width: 640,
+            set_default_height: 480,
+
+            gtk::Box {
+                set_orientation: gtk::Orientation::Vertical,
+                set_spacing: 5,
+                set_margin_all: 5,
+
+                gtk::Button {
+                    set_label: "Quit",
+                    // Emit quit signal
+                    connect_clicked[sender] => move |_| {
+                        sender.input(AppMsg::Quit);
+                    }
+                },
+
+                gtk::Label {
+                    #[watch]
+                    set_label: &format!("Initial Directory: {}", model.selected_path),
+                    set_margin_all: 5,
+                }
+            }
+        }
     }
 
     fn init(
@@ -42,53 +52,21 @@ impl SimpleComponent for AppModel {
     ) -> relm4::ComponentParts<Self> {
         let model = AppModel { selected_path: "/home/jmd/".to_owned() };
 
-        let vbox = gtk::Box::builder()
-            .orientation(gtk::Orientation::Vertical)
-            .spacing(5)
-            .build();
-
-        let quit_button = gtk::Button::with_label("Quit");
-
-        //let label = gtk::Label::new(Some(&format!("Test Label: {}", model.counter)));
-        let label = gtk::Label::new(Some(&format!("Test Label: {}", model.selected_path)));
-        //label.set_margin_all(5);
-
-        window.set_child(Some(&vbox));
-        vbox.set_margin_all(5);
-        //vbox.append(&inc_button);
-        //vbox.append(&dec_button);
-        //vbox.append(&label);
-        vbox.append(&quit_button);
-
-        // Emit quit signal
-        quit_button.connect_clicked(clone!(@strong sender => move |_| {
-            sender.input(AppInput::Quit);
-        }));
-
-        let widgets = AppWidgets { label };
+        let widgets = view_output!();
         ComponentParts { model, widgets }
     }
 
     fn update(&mut self, message: Self::Input, _sender: ComponentSender<Self>) {
         match message {
-            AppInput::Quit => {
+            AppMsg::Quit => {
+                // TODO: Close app on click
                 //self.close();
-                //return (Some(AppInput::Quit), Inhibit(false))
             }
         }
     }
-
-    /// Update the view to represent the updated model.
-    fn update_view(&self, widgets: &mut Self::Widgets, _sender: ComponentSender<Self>) {
-        //widgets
-            //.label
-            //.set_label(&format!("Counter: {}", self.counter));
-    }
 }
 
-
 fn main() {
-    //Win::run("/home/jmd/test").unwrap();
-    let app = RelmApp::new("relm4.test.simple_manual");
+    let app = RelmApp::new("io.github.jmdaemon.argo");
     app.run::<AppModel>(0);
 }
