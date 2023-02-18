@@ -17,23 +17,21 @@ use relm4::{gtk,
     prelude::{DynamicIndex, FactoryComponent}
 };
 
-// File Card Factory
-
+// FileCard Component
+// Constructs FileCards that contain a name, and an icon (TODO)
+// FileCards can be shown in a variety of views:
+//      - Icon FlowBox: Displays files with their icons
+//      - Vertical Box Detail Mode: Displays files with their file metadata in columns
 #[derive(Debug)]
 struct FileCard {
     pub full_path: PathBuf,
 }
 
 #[derive(Debug)]
-enum FileCardMsg {
-    //Set(PathBuf),
-}
+enum FileCardMsg { }
 
 #[derive(Debug)]
-enum FileCardOutput {
-}
-
-// FileCardFactory
+enum FileCardOutput { }
 
 #[relm4::factory]
 impl FactoryComponent for FileCard {
@@ -55,33 +53,11 @@ impl FactoryComponent for FileCard {
                 set_label: self.full_path.to_str().unwrap(),
                 set_width_chars: 32,
             },
-
-            //#[name(add_button)]
-            //gtk::Button {
-                //set_label: "+",
-                //connect_clicked => FileCardMsg::Set,
-            //},
         }
     }
     fn init_model(full_path: Self::Init, _index: &DynamicIndex, _sender: FactorySender<Self>) -> Self {
         Self { full_path }
     }
-
-    //fn output_to_parent_input(output: Self::Output) -> Option<AppMsg> {
-        //Some(match output {
-            //CounterOutput::SendFront(index) => AppMsg::SendFront(index),
-            //CounterOutput::MoveUp(index) => AppMsg::MoveUp(index),
-            //CounterOutput::MoveDown(index) => AppMsg::MoveDown(index),
-        //})
-    //}
-
-    //fn update(&mut self, msg: Self::Input, _sender: FactorySender<Self>) {
-        //match msg {
-            //FileCardMsg::Set(path) => {
-                //self.full_path = path;
-            //}
-        //}
-    //}
 }
 
 // Main App
@@ -166,27 +142,6 @@ impl SimpleComponent for App {
 
         ComponentParts { model, widgets }
     }
-    //fn init(
-        //root: Self::Init,
-        //window: &Self::Root,
-        //sender: ComponentSender<Self>,
-    //) -> relm4::ComponentParts<Self> {
-
-        //let model = AppModel { selected_file: None, files: Files }
-
-        ////let model = AppModel {
-            ////selected_path: "/home/jmd/".to_owned(),
-            ////filesview: FileCard::builder()
-                ////.launch(FileState {full_path: String::from("/home/jmd/"), filename: String::from("/home/jmd/")} )
-                ////.detach()
-                //////.forward(sender.input_sender(), |_| {AppMsg::Quit} )
-                //////.forward(sender.input_sender(), convert_alert_response),
-
-        ////};
-
-        //let widgets = view_output!();
-        //ComponentParts { model, widgets }
-    //}
 
     fn update(&mut self, message: Self::Input, _sender: ComponentSender<Self>) {
         match message {
