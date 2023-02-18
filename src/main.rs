@@ -1,43 +1,72 @@
+use std::path::PathBuf;
+
 use gtk::prelude::{BoxExt, ButtonExt, GtkWindowExt, OrientableExt};
-use relm4::{gtk, Controller, ComponentParts, ComponentSender, RelmApp, RelmWidgetExt, SimpleComponent, Component};
+use relm4::{gtk,
+    Controller,
+    ComponentParts,
+    ComponentSender,
+    RelmApp,
+    RelmWidgetExt,
+    SimpleComponent,
+    Component,
+    factory::{FactorySender, FactoryVecDeque, FactoryView}
+};
 
-pub struct DirectorySettings {
+/*
+ * 1. Read a directory of files into a string
+ */
+
+pub struct FileState {
     pub full_path: String,
-    pub filename: String,
 }
 
-pub struct Directory {
-    settings: DirectorySettings,
+pub struct FileCard {
+    settings: FileState,
 }
+
+// FileCardFactory
 
 #[derive(Debug)]
-pub enum DirectoryMsg {
-    /// Message sent by the parent to view the dialog
-    Show,
-
-    #[doc(hidden)]
-    Response(gtk::ResponseType),
+struct FileCardFactoryWidgets {
+    label: gtk::Label,
 }
 
-/// User action performed on the directory
-#[derive(Debug)]
-pub enum DirectoryResponse {
-    /// User double clicked directory.
-    Select,
+impl FactoryPrototype for FileCard {
+    type Factory = FactoryVecDeque<Self>;
+    type Widgets = FileCardFactoryWidgets;
+    type Root = gtk::Label;
+    type View = gtk::Box;
+    type Msg = AppMsg;
 
-    /// User deselected directory.
-    Deselect,
+    fn generate(&self, index: &usize, sender: Sender<AppMsg>) -> FileCardFactoryWidgets {
+        let button = gtk::Button::with_label(&self.value.to_string());
+        //let label = gtk::Label::new(Some(self.full_path.to_str().unwrap()))
+        let index = *index;
+        button.connect_clicked(move |_| {
+            sender.send(AppMsg::Clicked(index)).unwrap();
+        });
 
-    /// User shift clicked multiple directories.
-    Multiselect,
+        FileCardFactoryWidgets { label: button }
+    }
+
+    fn position(&self, _index: &usize) {}
+
+    fn update(&self, _index: &usize, widgets: &FileCardFactoryWidgets) {
+        widgets.label.set_label(&self.full_path.to_string());
+    }
+
+    fn get_root(widgets: &FileCardFactoryWidgets) -> &gtk::Label {
+        &widgets.label
+    }
 }
 
+/*
 #[relm4::component(pub)]
-impl SimpleComponent for Directory {
+impl SimpleComponent for FileCard {
     type Widgets = DirectoryWidgets;
-    type Init = DirectorySettings;
-    type Input = DirectoryMsg;
-    type Output = DirectoryResponse;
+    type Init = FileState;
+    type Input = FileMsg;
+    type Output = FileResponse;
 
     view! {
         #[wrap(Some)]
@@ -51,11 +80,11 @@ impl SimpleComponent for Directory {
     }
 
     fn init(
-        settings: DirectorySettings,
+        settings: FileState,
         root: &Self::Root,
         sender: ComponentSender<Self>,
     ) -> ComponentParts<Self> {
-        let model = Directory {
+        let model = FileCard {
             settings,
         };
 
@@ -90,17 +119,23 @@ impl SimpleComponent for Directory {
         ComponentParts { model, widgets }
     }
 
-    fn update(&mut self, input: DirectoryMsg, sender: ComponentSender<Self>) {
+    fn update(&mut self, input: FileMsg, sender: ComponentSender<Self>) {
     }
 }
+*/
 
 struct AppModel {
-    selected_path: String,
-    filesview: Controller<Directory>,
+    // For now only select one file at a time
+    selected_file: Option<usize>,
+    //filesview: Controller<FileCard>,
+    files: FactoryVecDeque<FileCard>,
 }
 
 #[derive(Debug)]
 enum AppMsg {
+    Add,
+    Remove,
+    Clicked(usize),
     Quit,
 }
 
@@ -130,36 +165,62 @@ impl SimpleComponent for AppModel {
                     }
                 },
 
-                gtk::Label {
-                    #[watch]
-                    set_label: &format!("Initial Directory: {}", model.selected_path),
+                append = &gtk::Box {
+                    set_orientation: gtk::Orientation::Vertical,
                     set_margin_all: 5,
-                },
+                    set_spacing: 5,
+                    factory!(model.files),
+                }
+
+                //gtk::Label {
+                    //#[watch]
+                    //set_label: &format!("Initial Directory: {}", model.selected_path),
+                    //set_margin_all: 5,
+                //},
             }
         }
     }
 
-    fn init(
-        root: Self::Init,
-        window: &Self::Root,
-        sender: ComponentSender<Self>,
-    ) -> relm4::ComponentParts<Self> {
-        let model = AppModel {
-            selected_path: "/home/jmd/".to_owned(),
-            filesview: Directory::builder()
-                .launch(DirectorySettings {full_path: String::from("/home/jmd/"), filename: String::from("/home/jmd/")} )
-                .detach()
-                //.forward(sender.input_sender(), |_| {AppMsg::Quit} )
-                //.forward(sender.input_sender(), convert_alert_response),
+    //fn init(
+        //root: Self::Init,
+        //window: &Self::Root,
+        //sender: ComponentSender<Self>,
+    //) -> relm4::ComponentParts<Self> {
 
-        };
+        //let model = AppModel { selected_file: None, files: Files }
 
-        let widgets = view_output!();
-        ComponentParts { model, widgets }
-    }
+        ////let model = AppModel {
+            ////selected_path: "/home/jmd/".to_owned(),
+            ////filesview: FileCard::builder()
+                ////.launch(FileState {full_path: String::from("/home/jmd/"), filename: String::from("/home/jmd/")} )
+                ////.detach()
+                //////.forward(sender.input_sender(), |_| {AppMsg::Quit} )
+                //////.forward(sender.input_sender(), convert_alert_response),
+
+        ////};
+
+        //let widgets = view_output!();
+        //ComponentParts { model, widgets }
+    //}
 
     fn update(&mut self, message: Self::Input, _sender: ComponentSender<Self>) {
         match message {
+            AppMsg::Add => {
+                self.files.push(FileCard {
+                    settings: FileState{
+                        full_path: PathBuf::from("aaaa"),
+                    },
+                });
+
+            }
+            AppMsg::Remove => {
+                self.files.pop();
+            }
+            AppMsg::Clicked(index) => {
+                if let Some(file_index) = self.files.get_mut(index) {
+                    println!("Clicked on {}", file_index);
+                }
+            }
             AppMsg::Quit => {
                 // TODO: Close app on click
                 //self.close();
