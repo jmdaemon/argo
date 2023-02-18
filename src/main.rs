@@ -63,6 +63,7 @@ impl FactoryComponent for FileCard {
 
 // DirectoryView / FilesView
 // Manages the FileCard Views and populates them with the correct filenames
+// The specific view for files can be toggled later in the future using FilesViewOutput::{Icon, Detail}
 
 #[derive(Debug)]
 struct FilesView {
@@ -111,6 +112,7 @@ impl SimpleComponent for FilesView {
         let mut filecards = FactoryVecDeque::new(gtk::Box::default(), sender.input_sender());
 
         // TODO: Pretend we listed out all the paths in the directory
+        // NOTE: This will be done later by the library code that we'll call later on
         let paths = vec![
             PathBuf::from("bbbb"),
             PathBuf::from("cccc"),
@@ -124,7 +126,6 @@ impl SimpleComponent for FilesView {
 
         // Set the model and the open directory
         let model = FilesView {
-            //directory: Some(PathBuf::from("/home/jmd")),
             directory,
             selected_file: None,
             files: filecards,
@@ -136,6 +137,8 @@ impl SimpleComponent for FilesView {
     }
 
     // Add or remove file cards
+    // TODO: In the future we may have to remove by name, so we'll probably have to develop
+    // A proper function that removes these file cards by name
     fn update(&mut self, message: Self::Input, _sender: ComponentSender<Self>) {
         match message {
             FilesViewMsg::AddFileCard => {
@@ -168,15 +171,6 @@ enum AppMsg {
 struct App {
     mode: AppMode,
     filesview: Controller<FilesView>,
-
-    //filesview: Controller<FilesView>,
-    //filesview: FilesView,
-    //filesview: gtk::Box,
-    //cont_filesview: Controller<FilesView>,
-
-    // For now only select one file at a time
-    //selected_file: Option<usize>,
-    //files: FactoryVecDeque<FileCard>,
 }
 
 #[relm4::component]
@@ -217,39 +211,8 @@ impl SimpleComponent for App {
                     connect_clicked => AppMsg::RemoveFileCard,
                 },
 
-
-                //#[wrap(Some)]
+                // Custom Widgets
                 model.filesview.widget(),
-                //#[local_ref]
-                //filesview -> gtk::Box {
-                //}
-                //filesview -> FilesViewWidgets {
-                //filesview -> Controller<FilesView> {
-                //cont_filesview -> Controller<FilesView> {
-                //},
-                // FilesView Component
-                //#[local_ref]
-                //filesview -> FilesView {
-                //},
-
-
-                // File Cards
-                //#[local_ref]
-                //filesview -> gtk::Box {
-                //},
-
-                //gtk::Box {
-                    //set_orientation: gtk::Orientation::Vertical,
-                    //set_spacing: 5,
-
-                    //#[local_ref]
-                    //filesview -> FilesView {
-                    //},
-                //}
-                //files_box -> gtk::Box {
-                    //set_orientation: gtk::Orientation::Vertical,
-                    //set_spacing: 5,
-                //}
             }
         }
     }
