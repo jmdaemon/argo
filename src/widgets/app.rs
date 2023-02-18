@@ -12,7 +12,9 @@ use gtk::prelude::{
     OrientableExt
 };
 
-use relm4::{gtk,
+use relm4::{
+    component,
+    gtk,
     Controller,
     ComponentParts,
     ComponentSender,
@@ -43,7 +45,7 @@ pub struct App {
     filesview: Controller<FilesView>,
 }
 
-#[relm4::component(pub)]
+#[component(pub)]
 impl SimpleComponent for App {
     type Init = ();
     type Input = AppMsg;

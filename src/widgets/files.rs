@@ -5,7 +5,9 @@ use gtk::prelude::{
     OrientableExt
 };
 
-use relm4::{gtk,
+use relm4::{
+    component,
+    gtk,
     ComponentParts,
     ComponentSender,
     SimpleComponent,
@@ -77,7 +79,7 @@ pub enum FilesViewOutput {
     Detail,
 }
 
-#[relm4::component(pub)]
+#[component(pub)]
 impl SimpleComponent for FilesView {
     type Init = Option<PathBuf>;
     type Input = FilesViewMsg;
