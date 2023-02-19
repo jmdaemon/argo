@@ -72,11 +72,12 @@ impl SimpleComponent for App {
                 set_start_child = &gtk::Box {
                         set_orientation: gtk::Orientation::Vertical,
                         model.bookmarksview.widget() {
-                            set_vexpand: true,
+                            //set_vexpand: true,
                             //set_size_request: (-1, 400),
-                            set_size_request: (50, 400),
                             //set_hexpand: false,
                             //set_vexpand: false,
+                            set_vexpand: true,
+                            set_size_request: (200, 200),
                         },
 
                         gtk::Button {

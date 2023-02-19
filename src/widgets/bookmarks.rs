@@ -28,35 +28,11 @@ pub struct Bookmark {
 }
 
 #[derive(Debug)]
-pub struct BookmarkEntry {
-    bookmark_type: BookmarkType,
-}
-
-#[derive(Debug)]
-pub enum BookmarkType {
-    Group(String, Vec<BookmarkType>),
-    Label(String, gtk::Label),
-    Separator(String, gtk::Separator),
-    Bookmark(String, PathBuf),
-    //Bookmark(Bookmark),
-}
-
-#[derive(Debug)]
 pub enum BookmarkMsg { }
 
 #[derive(Debug)]
 pub enum BookmarkOutput { }
 
-
-// Stores and manages groups of bookmarks
-//#[derive(Debug)]
-//pub struct BookmarkGroup {
-    //pub bookmarks: Vec<Bookmark>,
-//}
-
-// Want to treat Bookmarks, and a Group of them the same
-
-// Bookmarks
 #[factory(pub)]
 impl FactoryComponent for Bookmark {
     type Init = Bookmark;
@@ -64,23 +40,16 @@ impl FactoryComponent for Bookmark {
     type Output = BookmarkOutput;
     type CommandOutput = ();
     type ParentInput = BookmarksViewMsg;
-    type ParentWidget = gtk::Box;
+    type ParentWidget = gtk::ListBox;
 
     view! {
-        //#[root]
         #[root]
-        gtk::Box {
-        //gtk::Box {
-            //set_orientation: gtk::Orientation::Vertical,
-            set_orientation: gtk::Orientation::Horizontal,
-            //set_spacing: 10,
-
+        gtk::ListBox {
             #[name(label)]
             gtk::Label {
                 #[watch]
                 set_label: &self.title,
                 set_width_chars: 24,
-            //}
             },
         }
     }
@@ -114,6 +83,28 @@ impl FactoryComponent for Bookmark {
     //}
 }
 
+// Handling multiple bookmark types
+// TODO:
+// All bookmarks may have
+//      - a title (required)
+//      - a path (optional)
+//      - callback (optional)
+#[derive(Debug)]
+pub struct BookmarkEntry {
+    bookmark_type: BookmarkType,
+}
+
+#[derive(Debug)]
+pub enum BookmarkType {
+    Group(String, Vec<BookmarkType>),
+    Label(String, gtk::Label),
+    Separator(String, gtk::Separator),
+    Bookmark(String, PathBuf),
+    //Bookmark(Bookmark),
+}
+
+// TODO: Figure out how to handle multiple bookmark types including nested types
+
 #[derive(Debug)]
 pub struct BookmarksView {
     bookmarks: FactoryVecDeque<Bookmark>,
@@ -135,17 +126,10 @@ impl SimpleComponent for BookmarksView {
     type Init = ();
 
     view! {
-        //#[root]
-        //gtk::ListBox {
-        //gtk::Box {
-            //set_orientation: gtk::Orientation::Vertical,
-            //model.bookmarks.widget(),
+        #[root]
         gtk::Box {
             #[local_ref]
-            bookmarks_box -> gtk::Box {
-                set_orientation: gtk::Orientation::Vertical,
-                set_spacing: 5,
-            }
+            bookmarks_box -> gtk::ListBox,
         }
     }
 
@@ -158,9 +142,7 @@ impl SimpleComponent for BookmarksView {
         // TODO: Load bookmarks from disc
         // TODO: If not found, then create default bookmarks tab
         // For now we'll just stub it
-        let mut bookmarks = FactoryVecDeque::new(gtk::Box::default(), sender.input_sender());
-        //let mut bookmarks = FactoryVecDeque::new(gtk::ListBox::default(), sender.input_sender());
-        //let mut bookmarks = FactoryVecDeque::new(gtk::ListBox::default(), sender.input_sender());
+        let mut bookmarks = FactoryVecDeque::new(gtk::ListBox::default(), sender.input_sender());
         let defaults = vec![
             ("Home".to_owned(), home_dir().unwrap()),
             ("Music".to_owned(), audio_dir().unwrap()),
