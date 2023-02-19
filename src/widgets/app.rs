@@ -68,25 +68,37 @@ impl SimpleComponent for App {
                 //#[wrap(Some)]
                 //set_start_child = model.bookmarks.widget(),
 
+                set_halign: gtk::Align::Start,
                 #[wrap(Some)]
                 set_start_child = &gtk::Box {
                         set_orientation: gtk::Orientation::Vertical,
+                        set_halign: gtk::Align::Start,
+                        //set_hexpand: false,
+                        //set_vexpand: false,
+
+                        //set_hexpand: false,
+                        //set_vexpand: true,
+                        //set_size_request: (200, 200),
+                        //set_size_request: (100, 200),
+                        //model.bookmarksview.widget(),
+                        set_size_request: (100, 100),
                         model.bookmarksview.widget() {
-                            //set_vexpand: true,
+                            set_vexpand: true,
                             //set_size_request: (-1, 400),
                             //set_hexpand: false,
                             //set_vexpand: false,
-                            set_vexpand: true,
-                            set_size_request: (200, 200),
+                            //set_vexpand: true,
+                            //set_size_request: (200, 200),
                         },
 
                         gtk::Button {
-                        set_label: "Quit",
-                        // Emit quit signal
-                        connect_clicked[sender] => move |_| {
-                            sender.input(AppMsg::Close);
-                        },
-                    }
+                            set_hexpand: false,
+                            set_label: "Quit",
+                            // Emit quit signal
+                            connect_clicked[sender] => move |_| {
+                                sender.input(AppMsg::Close);
+                            },
+                        }
                 },
 
 
