@@ -63,23 +63,23 @@ impl SimpleComponent for App {
             set_default_height: 480,
 
             // Main App View
+            #[name="toolbar"]
+            gtk::Box {
+                set_orientation: gtk::Orientation::Horizontal,
+                set_margin_all: 5,
+                set_size_request: (-1, 32),
+            },
+            #[name="actionbar"]
+            gtk::Box {
+                set_orientation: gtk::Orientation::Horizontal,
+                set_margin_all: 5,
+                set_size_request: (-1, 32),
+            },
             gtk::CenterBox {
-                //set_orientation: gtk::Orientation::Horizontal,
-                //set_margin_all: 5,
-                //set_shrink_start_child: false,
-
-                //set_halign: gtk::Align::Start,
-                //#[wrap(Some)]
-                //set_start_child = &gtk::Box {
-
+                #[name="bookmarks_sidebar"]
                 #[wrap(Some)]
                 set_start_widget = &gtk::Box {
                     set_orientation: gtk::Orientation::Vertical,
-                    //set_size_request: (300, 100),
-                    //set_size_request: (200, 100),
-                    //set_hexpand: true,
-
-                    //model.bookmarksview.widget(),
                     model.bookmarksview.widget() {
                         set_min_content_width: 240,
                     },
@@ -93,17 +93,18 @@ impl SimpleComponent for App {
                     }
                 },
 
-                // Custom Widgets
-                //#[wrap(Some)]
-                //set_end_child = model.filesview.widget(),
+                #[name="filesview"]
                 #[wrap(Some)]
                 set_center_widget = &gtk::Box {
-                    //set_size_request: (300, 100),
-                    //model.filesview.widget(),
                     model.filesview.widget() {
                         set_min_content_width: 400,
                     }
-                }
+                },
+
+                #[name="argo_panels"]
+                #[wrap(Some)]
+                set_center_widget = &gtk::Box {
+                },
             }
         }
     }
