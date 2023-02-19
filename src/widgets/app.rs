@@ -36,8 +36,6 @@ pub enum AppMode {
 #[derive(Debug)]
 pub enum AppMsg {
     SetMode(AppMode),
-    AddFileCard,
-    RemoveFileCard,
     Close,
 }
 
@@ -74,17 +72,6 @@ impl SimpleComponent for App {
                     }
                 },
 
-                // Add/Remove file cards
-                gtk::Button {
-                    set_label: "Add file card",
-                    connect_clicked => AppMsg::AddFileCard,
-                },
-
-                gtk::Button {
-                    set_label: "Remove file card",
-                    connect_clicked => AppMsg::RemoveFileCard,
-                },
-
                 // Custom Widgets
                 model.filesview.widget(),
             }
@@ -118,12 +105,6 @@ impl SimpleComponent for App {
         match message {
             AppMsg::SetMode(mode) => {
                 self.mode = mode;
-            }
-            AppMsg::AddFileCard => {
-                //self.files.guard().push_back(PathBuf::from("bbbb"));
-            }
-            AppMsg::RemoveFileCard => {
-                //self.files.guard().pop_back();
             }
             AppMsg::Close => {
                 relm4::main_application().quit();
