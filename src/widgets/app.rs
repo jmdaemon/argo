@@ -14,7 +14,7 @@ use gtk::prelude::{
 
 use relm4::{
     component,
-    gtk,
+    gtk::{self, prelude::ApplicationExt},
     Controller,
     ComponentParts,
     ComponentSender,
@@ -36,7 +36,7 @@ pub enum AppMsg {
     SetMode(AppMode),
     AddFileCard,
     RemoveFileCard,
-    Quit,
+    Close,
 }
 
 #[derive(Debug)]
@@ -68,7 +68,7 @@ impl SimpleComponent for App {
                     set_label: "Quit",
                     // Emit quit signal
                     connect_clicked[sender] => move |_| {
-                        sender.input(AppMsg::Quit);
+                        sender.input(AppMsg::Close);
                     }
                 },
 
@@ -137,7 +137,8 @@ impl SimpleComponent for App {
             AppMsg::RemoveFileCard => {
                 //self.files.guard().pop_back();
             }
-            AppMsg::Quit => {
+            AppMsg::Close => {
+                relm4::main_application().quit();
                 // TODO: Close app on click
                 //self.close();
             }
