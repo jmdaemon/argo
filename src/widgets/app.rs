@@ -1,6 +1,6 @@
-use crate::widgets::files::{
-    FilesView,
-    FilesViewOutput
+use crate::widgets::{
+    files::{FilesView, FilesViewOutput},
+    bookmarks::BookmarksView,
 };
 
 use gtk::prelude::{
@@ -23,7 +23,6 @@ use relm4::{
 
 use dirs::home_dir;
 
-use super::bookmarks::BookmarksView;
 
 // Main App
 
@@ -44,7 +43,7 @@ pub enum AppMsg {
 pub struct App {
     mode: AppMode,
     filesview: Controller<FilesView>,
-    bookmarks: Controller<BookmarksView>,
+    bookmarksview: Controller<BookmarksView>,
 }
 
 #[component(pub)]
@@ -72,7 +71,7 @@ impl SimpleComponent for App {
                 #[wrap(Some)]
                 set_start_child = &gtk::Box {
                         set_orientation: gtk::Orientation::Vertical,
-                        model.bookmarks.widget() {
+                        model.bookmarksview.widget() {
                             set_vexpand: true,
                             set_size_request: (-1, 400),
                         },
@@ -121,10 +120,10 @@ impl SimpleComponent for App {
                 FilesViewOutput::Detail => AppMsg::SetMode(AppMode::Detail),
         });
 
-        let bookmarks = BookmarksView::builder()
+        let bookmarksview = BookmarksView::builder()
             .launch(()).forward(sender.input_sender(), |msg| AppMsg::GotoBookmark);
         
-        let model = App { mode, filesview, bookmarks };
+        let model = App { mode, filesview, bookmarksview };
         let widgets = view_output!();
         ComponentParts { model, widgets }
     }
