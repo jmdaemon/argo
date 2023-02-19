@@ -1,7 +1,7 @@
-use argo::widgets::app::App;
+use argo::{widgets::app::App, consts::APP_ID};
 use relm4::RelmApp;
 
 fn main() {
-    let app = RelmApp::new("io.github.jmdaemon.argo");
+    let app = RelmApp::new(APP_ID);
     app.run::<App>(());
 }
