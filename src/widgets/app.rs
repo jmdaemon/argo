@@ -3,8 +3,6 @@ use crate::widgets::files::{
     FilesViewOutput
 };
 
-use std::path::PathBuf;
-
 use gtk::prelude::{
     BoxExt,
     ButtonExt,
@@ -14,7 +12,7 @@ use gtk::prelude::{
 
 use relm4::{
     component,
-    gtk::{self, prelude::ApplicationExt},
+    gtk::{self, prelude::ApplicationExt, traits::WidgetExt},
     Controller,
     ComponentParts,
     ComponentSender,
@@ -58,13 +56,15 @@ impl SimpleComponent for App {
             set_default_height: 480,
 
             // Main App View
-            gtk::Box {
-                set_orientation: gtk::Orientation::Vertical,
-                set_spacing: 5,
+            gtk::Paned {
+                set_orientation: gtk::Orientation::Horizontal,
+                //set_spacing: 5,
                 set_margin_all: 5,
+                set_size_request: (200, -1),
 
                 // Quit/Exit Button
-                gtk::Button {
+                #[wrap(Some)]
+                set_start_child = &gtk::Button {
                     set_label: "Quit",
                     // Emit quit signal
                     connect_clicked[sender] => move |_| {
@@ -73,7 +73,8 @@ impl SimpleComponent for App {
                 },
 
                 // Custom Widgets
-                model.filesview.widget(),
+                #[wrap(Some)]
+                set_end_child = model.filesview.widget(),
             }
         }
     }
