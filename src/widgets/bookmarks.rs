@@ -46,8 +46,6 @@ impl FactoryComponent for Bookmark {
     view! {
         #[root]
         gtk::ListBox {
-            //set_vexpand: true,
-            //set_hexpand: true,
             #[name(label)]
             gtk::Label {
                 #[watch]
@@ -103,7 +101,6 @@ pub enum BookmarkType {
     Label(String, gtk::Label),
     Separator(String, gtk::Separator),
     Bookmark(String, PathBuf),
-    //Bookmark(Bookmark),
 }
 
 // TODO: Figure out how to handle multiple bookmark types including nested types
@@ -131,16 +128,11 @@ impl SimpleComponent for BookmarksView {
     view! {
         #[root]
         gtk::Box {
-            //set_halign: gtk::Align::End,
-            set_vexpand: true,
-            set_hexpand: true,
-
             #[local_ref]
             bookmarks_box -> gtk::ListBox {
                 set_vexpand: true,
                 set_hexpand: true,
             }
-            //bookmarks_box -> gtk::ListBox,
         }
     }
 

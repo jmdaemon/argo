@@ -67,6 +67,8 @@ impl SimpleComponent for App {
                 set_orientation: gtk::Orientation::Horizontal,
                 set_margin_all: 5,
                 //set_size_request: (200, 100),
+                set_shrink_start_child: false,
+                //set_shrink_end_child: false,
                 set_size_request: (300, 100),
 
                 set_halign: gtk::Align::Start,
