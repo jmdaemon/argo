@@ -66,35 +66,24 @@ impl SimpleComponent for App {
             gtk::Paned {
                 set_orientation: gtk::Orientation::Horizontal,
                 set_margin_all: 5,
-                //set_size_request: (200, 100),
                 set_shrink_start_child: false,
-                //set_shrink_end_child: false,
-                set_size_request: (300, 100),
 
                 set_halign: gtk::Align::Start,
                 #[wrap(Some)]
                 set_start_child = &gtk::Box {
-                        set_orientation: gtk::Orientation::Vertical,
-                        set_hexpand: true,
-                        //set_halign: gtk::Align::Start,
-                        //set_size_request: (100, 200),
+                    set_orientation: gtk::Orientation::Vertical,
+                    set_size_request: (300, 100),
+                    set_hexpand: true,
 
-                        //model.bookmarksview.widget(),
+                    model.bookmarksview.widget(),
 
-                        model.bookmarksview.widget() {
-                            set_vexpand: true,
-                            set_hexpand: true,
-                            //set_hexpand: true,
+                    gtk::Button {
+                        set_label: "Quit",
+                        // Emit quit signal
+                        connect_clicked[sender] => move |_| {
+                            sender.input(AppMsg::Close);
                         },
-
-                        gtk::Button {
-                            //set_hexpand: false,
-                            set_label: "Quit",
-                            // Emit quit signal
-                            connect_clicked[sender] => move |_| {
-                                sender.input(AppMsg::Close);
-                            },
-                        }
+                    }
                 },
 
                 // Custom Widgets
