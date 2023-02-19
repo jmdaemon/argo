@@ -1,11 +1,11 @@
 use std::path::PathBuf;
 
 use relm4::{
-    //component,
+    component,
     gtk,
-    //Component,
-    //ComponentSender,
-    //ComponentParts,
+    SimpleComponent,
+    ComponentSender,
+    ComponentParts,
     factory,
     factory::FactoryView,
     prelude::{DynamicIndex, FactoryComponent},
@@ -88,4 +88,46 @@ impl FactoryComponent for BookmarksFactory {
         //let output = match output {};
         //Some(output)
     //}
+}
+
+#[derive(Debug)]
+pub struct BookmarksView {}
+
+#[derive(Debug)]
+pub enum BookmarksViewMsg {}
+
+#[derive(Debug)]
+pub enum BookmarksViewOutput {}
+
+//pub struct BookmarksViewInit {}
+
+#[component(pub)]
+impl SimpleComponent for BookmarksView {
+    type Input = BookmarksViewMsg;
+    type Output = BookmarksViewOutput;
+    //type Init = BookmarksViewInit;
+    type Init = ();
+
+    view! {
+        #[root]
+        gtk::Box {
+
+        }
+    }
+
+    fn init(
+        init: Self::Init,
+        root: &Self::Root,
+        sender: ComponentSender<Self>,
+    ) -> ComponentParts<Self> {
+        let model = BookmarksView {  };
+        let widgets = view_output!();
+        ComponentParts { model, widgets }
+    }
+
+    fn update(&mut self, message: Self::Input, sender: ComponentSender<Self>) {
+        match message {
+
+        }
+    }
 }

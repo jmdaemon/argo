@@ -23,6 +23,8 @@ use relm4::{
 
 use dirs::home_dir;
 
+use super::bookmarks::BookmarksView;
+
 // Main App
 
 #[derive(Debug)]
@@ -34,6 +36,7 @@ pub enum AppMode {
 #[derive(Debug)]
 pub enum AppMsg {
     SetMode(AppMode),
+    GotoBookmark,
     Close,
 }
 
@@ -41,6 +44,7 @@ pub enum AppMsg {
 pub struct App {
     mode: AppMode,
     filesview: Controller<FilesView>,
+    bookmarks: Controller<BookmarksView>,
 }
 
 #[component(pub)]
@@ -62,15 +66,35 @@ impl SimpleComponent for App {
                 set_margin_all: 5,
                 set_size_request: (200, -1),
 
-                // Quit/Exit Button
+                //#[wrap(Some)]
+                //set_start_child = model.bookmarks.widget(),
+
                 #[wrap(Some)]
-                set_start_child = &gtk::Button {
-                    set_label: "Quit",
-                    // Emit quit signal
-                    connect_clicked[sender] => move |_| {
-                        sender.input(AppMsg::Close);
+                set_start_child = &gtk::Box {
+                        set_orientation: gtk::Orientation::Vertical,
+                        model.bookmarks.widget() {
+                            set_vexpand: true,
+                            set_size_request: (-1, 400),
+                        },
+
+                        gtk::Button {
+                        set_label: "Quit",
+                        // Emit quit signal
+                        connect_clicked[sender] => move |_| {
+                            sender.input(AppMsg::Close);
+                        },
                     }
                 },
+
+
+                // Quit/Exit Button
+                //set_start_child = &gtk::Button {
+                    //set_label: "Quit",
+                    //// Emit quit signal
+                    //connect_clicked[sender] => move |_| {
+                        //sender.input(AppMsg::Close);
+                    //}
+                //},
 
                 // Custom Widgets
                 #[wrap(Some)]
@@ -96,8 +120,11 @@ impl SimpleComponent for App {
                 FilesViewOutput::Icon => AppMsg::SetMode(AppMode::Icon),
                 FilesViewOutput::Detail => AppMsg::SetMode(AppMode::Detail),
         });
+
+        let bookmarks = BookmarksView::builder()
+            .launch(()).forward(sender.input_sender(), |msg| AppMsg::GotoBookmark);
         
-        let model = App { mode, filesview };
+        let model = App { mode, filesview, bookmarks };
         let widgets = view_output!();
         ComponentParts { model, widgets }
     }
@@ -109,6 +136,9 @@ impl SimpleComponent for App {
             }
             AppMsg::Close => {
                 relm4::main_application().quit();
+            }
+            AppMsg::GotoBookmark => {
+                // Navigate to bookmark?
             }
         }
     }
