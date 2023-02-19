@@ -23,6 +23,8 @@ use relm4::{
     Component, ComponentController
 };
 
+use dirs::home_dir;
+
 // Main App
 
 #[derive(Debug)]
@@ -98,12 +100,7 @@ impl SimpleComponent for App {
 
         let mode = AppMode::Icon;
         
-        //let fv_builder = FilesView::builder().attach_to(root);
-
-        //let filesview = fv_builder.widget();
-
-        //let cont_filesview = FilesView::builder()
-        let default_dir = PathBuf::from("/home/jmd");
+        let default_dir = home_dir().expect("User has no $HOME directory");
         let filesview = FilesView::builder()
             .launch(Some(default_dir))
             .forward(sender.input_sender(),
@@ -112,19 +109,10 @@ impl SimpleComponent for App {
                 FilesViewOutput::Detail => AppMsg::SetMode(AppMode::Detail),
         });
         
-        //let model = App { mode, filesview, cont_filesview };
-        //let model = App { mode, cont_filesview };
-        //let filesview = cont_filesview.
         let model = App { mode, filesview };
-
         let widgets = view_output!();
-
         ComponentParts { model, widgets }
     }
-    //FilesViewMsg::Quit => {
-        //// TODO: Close app on click
-        ////self.close();
-    //}
 
     fn update(&mut self, message: Self::Input, _sender: ComponentSender<Self>) {
         match message {
@@ -139,26 +127,7 @@ impl SimpleComponent for App {
             }
             AppMsg::Close => {
                 relm4::main_application().quit();
-                // TODO: Close app on click
-                //self.close();
             }
         }
     }
-
-
-
-    //fn update(&mut self, message: Self::Input, _sender: ComponentSender<Self>) {
-        //match message {
-            //AppMsg::AddFileCard => {
-                //self.files.guard().push_back(PathBuf::from("bbbb"));
-            //}
-            //AppMsg::RemoveFileCard => {
-                //self.files.guard().pop_back();
-            //}
-            //AppMsg::Quit => {
-                //// TODO: Close app on click
-                ////self.close();
-            //}
-        //}
-    //}
 }
