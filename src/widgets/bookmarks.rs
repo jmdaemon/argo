@@ -1,5 +1,10 @@
 use std::path::PathBuf;
 
+use gtk::prelude::{
+    BoxExt,
+    OrientableExt
+};
+
 use relm4::{
     component,
     gtk,
@@ -7,11 +12,13 @@ use relm4::{
     ComponentSender,
     ComponentParts,
     factory,
-    factory::FactoryView,
+    factory::{FactoryView, FactoryVecDeque},
     prelude::{DynamicIndex, FactoryComponent},
     FactorySender,
 
 };
+
+use dirs::{audio_dir,  home_dir, desktop_dir, download_dir, picture_dir, video_dir};
 
 // Bookmark
 #[derive(Debug)]
@@ -20,44 +27,61 @@ pub struct Bookmark {
     pub path: PathBuf,
 }
 
-// Stores and manages groups of bookmarks
 #[derive(Debug)]
-pub struct BookmarkGroup {
-    pub bookmarks: Vec<Bookmark>,
+pub struct BookmarkEntry {
+    bookmark_type: BookmarkType,
 }
+
+#[derive(Debug)]
+pub enum BookmarkType {
+    Group(String, Vec<BookmarkType>),
+    Label(String, gtk::Label),
+    Separator(String, gtk::Separator),
+    Bookmark(String, PathBuf),
+    //Bookmark(Bookmark),
+}
+
+#[derive(Debug)]
+pub enum BookmarkMsg { }
+
+#[derive(Debug)]
+pub enum BookmarkOutput { }
+
+
+// Stores and manages groups of bookmarks
+//#[derive(Debug)]
+//pub struct BookmarkGroup {
+    //pub bookmarks: Vec<Bookmark>,
+//}
+
+// Want to treat Bookmarks, and a Group of them the same
 
 // Bookmarks
-pub struct BookmarksFactory {
-
-}
-
-#[derive(Debug)]
-pub enum BookmarksFactoryMsg {
-    //AddBookmark,
-    //RemoveBookmark,
-    //RemoveGroup,
-    //ReorderBookmark,
-    //ReorderGroup,
-}
-
-#[derive(Debug)]
-pub enum BookmarksFactoryOutput {}
-
-pub struct BookmarksFactoryInit {}
-
 #[factory(pub)]
-impl FactoryComponent for BookmarksFactory {
-    type ParentWidget = gtk::ListBox;
-    type ParentInput = ();
-    type Input = BookmarksFactoryMsg;
-    type Output = BookmarksFactoryOutput;
-    type Init = BookmarksFactoryInit;
+impl FactoryComponent for Bookmark {
+    type Init = Bookmark;
+    type Input = BookmarkMsg;
+    type Output = BookmarkOutput;
     type CommandOutput = ();
+    type ParentInput = BookmarksViewMsg;
+    type ParentWidget = gtk::Box;
 
     view! {
+        //#[root]
         #[root]
-        gtk::ListBox {
+        gtk::Box {
+        //gtk::Box {
+            //set_orientation: gtk::Orientation::Vertical,
+            set_orientation: gtk::Orientation::Horizontal,
+            //set_spacing: 10,
 
+            #[name(label)]
+            gtk::Label {
+                #[watch]
+                set_label: &self.title,
+                set_width_chars: 24,
+            //}
+            },
         }
     }
 
@@ -66,7 +90,7 @@ impl FactoryComponent for BookmarksFactory {
         index: &DynamicIndex,
         sender: FactorySender<Self>,
     ) -> Self {
-        Self {}
+        init
     }
 
     fn init_widgets(
@@ -91,7 +115,9 @@ impl FactoryComponent for BookmarksFactory {
 }
 
 #[derive(Debug)]
-pub struct BookmarksView {}
+pub struct BookmarksView {
+    bookmarks: FactoryVecDeque<Bookmark>,
+}
 
 #[derive(Debug)]
 pub enum BookmarksViewMsg {}
@@ -109,9 +135,17 @@ impl SimpleComponent for BookmarksView {
     type Init = ();
 
     view! {
-        #[root]
+        //#[root]
+        //gtk::ListBox {
+        //gtk::Box {
+            //set_orientation: gtk::Orientation::Vertical,
+            //model.bookmarks.widget(),
         gtk::Box {
-
+            #[local_ref]
+            bookmarks_box -> gtk::Box {
+                set_orientation: gtk::Orientation::Vertical,
+                set_spacing: 5,
+            }
         }
     }
 
@@ -120,7 +154,32 @@ impl SimpleComponent for BookmarksView {
         root: &Self::Root,
         sender: ComponentSender<Self>,
     ) -> ComponentParts<Self> {
-        let model = BookmarksView {  };
+
+        // TODO: Load bookmarks from disc
+        // TODO: If not found, then create default bookmarks tab
+        // For now we'll just stub it
+        let mut bookmarks = FactoryVecDeque::new(gtk::Box::default(), sender.input_sender());
+        //let mut bookmarks = FactoryVecDeque::new(gtk::ListBox::default(), sender.input_sender());
+        //let mut bookmarks = FactoryVecDeque::new(gtk::ListBox::default(), sender.input_sender());
+        let defaults = vec![
+            ("Home".to_owned(), home_dir().unwrap()),
+            ("Music".to_owned(), audio_dir().unwrap()),
+            ("Desktop".to_owned(), desktop_dir().unwrap()),
+            ("Downloads".to_owned(), download_dir().unwrap()),
+            ("Pictures".to_owned(), picture_dir().unwrap()),
+            ("Videos".to_owned(), video_dir().unwrap()),
+        ];
+
+        for (title, path) in defaults {
+            //let bookmark_type = BookmarkType::Bookmark(title, path);
+            //let bookmark_entry = BookmarkEntry { bookmark_type }; 
+            //bookmarks.guard().push_back(bookmark_entry);
+            let bookmark = Bookmark{ title, path };
+            bookmarks.guard().push_back(bookmark);
+        }
+
+        let model = BookmarksView { bookmarks };
+        let bookmarks_box = model.bookmarks.widget();
         let widgets = view_output!();
         ComponentParts { model, widgets }
     }
