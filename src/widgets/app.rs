@@ -1,6 +1,7 @@
 use crate::widgets::{
-    files::{FilesView, FilesViewOutput},
+files::{FilesView, FilesViewOutput},
     bookmarks::BookmarksView,
+    toolbar::Toolbar,
 };
 
 use gtk::prelude::{
@@ -48,6 +49,7 @@ pub struct App {
     mode: AppMode,
     filesview: Controller<FilesView>,
     bookmarksview: Controller<BookmarksView>,
+    toolbar: Controller<Toolbar>,
 }
 
 #[component(pub)]
@@ -62,49 +64,81 @@ impl SimpleComponent for App {
             set_default_width: 640,
             set_default_height: 480,
 
-            // Main App View
-            #[name="toolbar"]
             gtk::Box {
-                set_orientation: gtk::Orientation::Horizontal,
-                set_margin_all: 5,
-                set_size_request: (-1, 32),
-            },
-            #[name="actionbar"]
-            gtk::Box {
-                set_orientation: gtk::Orientation::Horizontal,
-                set_margin_all: 5,
-                set_size_request: (-1, 32),
-            },
-            gtk::CenterBox {
-                #[name="bookmarks_sidebar"]
-                #[wrap(Some)]
-                set_start_widget = &gtk::Box {
-                    set_orientation: gtk::Orientation::Vertical,
-                    model.bookmarksview.widget() {
-                        set_min_content_width: 240,
+                set_orientation: gtk::Orientation::Vertical,
+                //model.toolbar.widget() {
+                    //set_size_request: (100, 100),
+                //},
+                // Main App View
+                #[name="toolbar"]
+                gtk::Box {
+                    set_orientation: gtk::Orientation::Horizontal,
+                    set_margin_all: 5,
+                    //set_size_request: (-1, 32),
+                    model.toolbar.widget() {
+                        set_size_request: (-1, 32),
+                        //set_size_request: (100, 100),
+                    //set_size_request: (-1, 32),
+                    //set_size_request: (400, 32),
+                    }
+                },
+                #[name="actionbar"]
+                gtk::Box {
+                    set_orientation: gtk::Orientation::Horizontal,
+                    set_margin_all: 5,
+                    set_size_request: (-1, 32),
+                },
+                gtk::CenterBox {
+                    set_orientation: gtk::Orientation::Horizontal,
+                    //set_size_request: (200, -1),
+                    set_vexpand: true,
+
+                    #[name="bookmarks_sidebar"]
+                    #[wrap(Some)]
+                    set_start_widget = &gtk::Box {
+                        //gtk::ScrolledWindow {
+                        //},
+                        set_orientation: gtk::Orientation::Vertical,
+                        model.bookmarksview.widget() {
+                            set_min_content_width: 180,
+                            set_hscrollbar_policy: gtk::PolicyType::Never,
+                            //set_min_content_width: 240,
+                            //set_min_content_width: 100,
+                        },
+
+                        gtk::Button {
+                            set_label: "Quit",
+                            // Emit quit signal
+                            connect_clicked[sender] => move |_| {
+                                sender.input(AppMsg::Close);
+                            },
+                        }
                     },
 
-                    gtk::Button {
-                        set_label: "Quit",
-                        // Emit quit signal
-                        connect_clicked[sender] => move |_| {
-                            sender.input(AppMsg::Close);
-                        },
-                    }
-                },
+                    #[name="filesview_panel"]
+                    #[wrap(Some)]
+                    set_center_widget = &gtk::Box {
+                        //set_hexpand: true,
+                        set_size_request: (400, -1),
+                        //gtk::Label {
+                            //set_label: "Test",
+                        //}
+                        model.filesview.widget() {
+                            set_min_content_width: 400,
+                            set_hscrollbar_policy: gtk::PolicyType::Never,
+                            //set_min_content_width: 300,
+                        }
+                    },
 
-                #[name="filesview"]
-                #[wrap(Some)]
-                set_center_widget = &gtk::Box {
-                    model.filesview.widget() {
-                        set_min_content_width: 400,
-                    }
-                },
-
-                #[name="argo_panels"]
-                #[wrap(Some)]
-                set_center_widget = &gtk::Box {
-                },
+                    #[name="argo_panels"]
+                    #[wrap(Some)]
+                    set_end_widget = &gtk::Box {
+                        set_size_request: (60, -1),
+                        gtk::Label {
+                            set_label: "TODO: Implement Notebook Panel",
+                        }
+                    },
+                }
             }
         }
     }
@@ -129,8 +163,11 @@ impl SimpleComponent for App {
 
         let bookmarksview = BookmarksView::builder()
             .launch(()).forward(sender.input_sender(), |msg| AppMsg::GotoBookmark);
+
+        let toolbar = Toolbar::builder()
+            .launch(()).forward(sender.input_sender(), |msg| AppMsg::GotoBookmark);
         
-        let model = App { mode, filesview, bookmarksview };
+        let model = App { mode, filesview, bookmarksview, toolbar };
         let widgets = view_output!();
         ComponentParts { model, widgets }
     }
