@@ -7,12 +7,16 @@ use gtk::prelude::{
     BoxExt,
     ButtonExt,
     GtkWindowExt,
-    OrientableExt
+    OrientableExt,
+    ApplicationExt,
+    WidgetExt,
 };
 
 use relm4::{
     component,
-    gtk::{self, prelude::ApplicationExt, traits::WidgetExt},
+    //gtk::{self, prelude::ApplicationExt, traits::WidgetExt},
+    //gtk::{self, prelude::ApplicationExt, traits::WidgetExt},
+    gtk,
     Controller,
     ComponentParts,
     ComponentSender,
@@ -61,38 +65,28 @@ impl SimpleComponent for App {
             // Main App View
             gtk::Paned {
                 set_orientation: gtk::Orientation::Horizontal,
-                //set_spacing: 5,
                 set_margin_all: 5,
-                set_size_request: (200, -1),
-
-                //#[wrap(Some)]
-                //set_start_child = model.bookmarks.widget(),
+                //set_size_request: (200, 100),
+                set_size_request: (300, 100),
 
                 set_halign: gtk::Align::Start,
                 #[wrap(Some)]
                 set_start_child = &gtk::Box {
                         set_orientation: gtk::Orientation::Vertical,
-                        set_halign: gtk::Align::Start,
-                        //set_hexpand: false,
-                        //set_vexpand: false,
-
-                        //set_hexpand: false,
-                        //set_vexpand: true,
-                        //set_size_request: (200, 200),
+                        set_hexpand: true,
+                        //set_halign: gtk::Align::Start,
                         //set_size_request: (100, 200),
+
                         //model.bookmarksview.widget(),
-                        set_size_request: (100, 100),
+
                         model.bookmarksview.widget() {
                             set_vexpand: true,
-                            //set_size_request: (-1, 400),
-                            //set_hexpand: false,
-                            //set_vexpand: false,
-                            //set_vexpand: true,
-                            //set_size_request: (200, 200),
+                            set_hexpand: true,
+                            //set_hexpand: true,
                         },
 
                         gtk::Button {
-                            set_hexpand: false,
+                            //set_hexpand: false,
                             set_label: "Quit",
                             // Emit quit signal
                             connect_clicked[sender] => move |_| {
@@ -100,16 +94,6 @@ impl SimpleComponent for App {
                             },
                         }
                 },
-
-
-                // Quit/Exit Button
-                //set_start_child = &gtk::Button {
-                    //set_label: "Quit",
-                    //// Emit quit signal
-                    //connect_clicked[sender] => move |_| {
-                        //sender.input(AppMsg::Close);
-                    //}
-                //},
 
                 // Custom Widgets
                 #[wrap(Some)]

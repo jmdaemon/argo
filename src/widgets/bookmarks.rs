@@ -2,7 +2,8 @@ use std::path::PathBuf;
 
 use gtk::prelude::{
     BoxExt,
-    OrientableExt
+    OrientableExt,
+    WidgetExt,
 };
 
 use relm4::{
@@ -45,6 +46,8 @@ impl FactoryComponent for Bookmark {
     view! {
         #[root]
         gtk::ListBox {
+            //set_vexpand: true,
+            //set_hexpand: true,
             #[name(label)]
             gtk::Label {
                 #[watch]
@@ -128,8 +131,16 @@ impl SimpleComponent for BookmarksView {
     view! {
         #[root]
         gtk::Box {
+            //set_halign: gtk::Align::End,
+            set_vexpand: true,
+            set_hexpand: true,
+
             #[local_ref]
-            bookmarks_box -> gtk::ListBox,
+            bookmarks_box -> gtk::ListBox {
+                set_vexpand: true,
+                set_hexpand: true,
+            }
+            //bookmarks_box -> gtk::ListBox,
         }
     }
 
