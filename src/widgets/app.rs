@@ -63,19 +63,26 @@ impl SimpleComponent for App {
             set_default_height: 480,
 
             // Main App View
-            gtk::Paned {
-                set_orientation: gtk::Orientation::Horizontal,
-                set_margin_all: 5,
-                set_shrink_start_child: false,
+            gtk::CenterBox {
+                //set_orientation: gtk::Orientation::Horizontal,
+                //set_margin_all: 5,
+                //set_shrink_start_child: false,
 
-                set_halign: gtk::Align::Start,
+                //set_halign: gtk::Align::Start,
+                //#[wrap(Some)]
+                //set_start_child = &gtk::Box {
+
                 #[wrap(Some)]
-                set_start_child = &gtk::Box {
+                set_start_widget = &gtk::Box {
                     set_orientation: gtk::Orientation::Vertical,
-                    set_size_request: (300, 100),
-                    set_hexpand: true,
+                    //set_size_request: (300, 100),
+                    //set_size_request: (200, 100),
+                    //set_hexpand: true,
 
-                    model.bookmarksview.widget(),
+                    //model.bookmarksview.widget(),
+                    model.bookmarksview.widget() {
+                        set_min_content_width: 240,
+                    },
 
                     gtk::Button {
                         set_label: "Quit",
@@ -87,8 +94,16 @@ impl SimpleComponent for App {
                 },
 
                 // Custom Widgets
+                //#[wrap(Some)]
+                //set_end_child = model.filesview.widget(),
                 #[wrap(Some)]
-                set_end_child = model.filesview.widget(),
+                set_center_widget = &gtk::Box {
+                    //set_size_request: (300, 100),
+                    //model.filesview.widget(),
+                    model.filesview.widget() {
+                        set_min_content_width: 400,
+                    }
+                }
             }
         }
     }

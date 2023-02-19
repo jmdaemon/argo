@@ -127,7 +127,7 @@ impl SimpleComponent for BookmarksView {
 
     view! {
         #[root]
-        gtk::Box {
+        gtk::ScrolledWindow {
             #[local_ref]
             bookmarks_box -> gtk::ListBox {
                 set_vexpand: true,

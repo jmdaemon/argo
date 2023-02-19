@@ -86,8 +86,8 @@ impl SimpleComponent for FilesView {
     type Output = FilesViewOutput;
 
     view! {
-        #[name = "filesview"]
-        gtk::Box {
+        #[root]
+        gtk::ScrolledWindow {
             // File Cards
             #[local_ref]
             files_box -> gtk::Box {
