@@ -84,6 +84,7 @@ impl SimpleComponent for App {
                 gtk::CenterBox {
                     set_orientation: gtk::Orientation::Horizontal,
                     set_vexpand: true,
+                    set_hexpand: true,
 
                     #[name="bookmarks_sidebar"]
                     #[wrap(Some)]
@@ -100,7 +101,6 @@ impl SimpleComponent for App {
                                 set_min_content_width: 150,
                                 set_hscrollbar_policy: gtk::PolicyType::Never,
                             },
-
                             gtk::Button {
                                 set_label: "Quit",
                                 // Emit quit signal
@@ -114,19 +114,26 @@ impl SimpleComponent for App {
                     #[name="filesview_panel"]
                     #[wrap(Some)]
                     set_center_widget = &gtk::Frame {
+                        //set_halign: gtk::Align::Start,
+                        //set_width_request: 200,
                         set_hexpand: true,
                         gtk::Box {
                             set_hexpand: true,
+                            set_vexpand: true,
                             set_orientation: gtk::Orientation::Vertical,
 
                             #[name="navbar"]
                             gtk::Frame {
+                                set_hexpand: true,
                                 gtk::Box {
                                     set_orientation: gtk::Orientation::Horizontal,
                                     set_margin_all: 5,
                                     set_height_request: 32,
 
                                     model.navbar.widget(),
+                                    //model.navbar.widget() {
+                                        //set_height_request: 32,
+                                    //},
                                     gtk::SearchEntry {
                                         set_hexpand: true,
                                     }
@@ -155,43 +162,23 @@ impl SimpleComponent for App {
                     #[name="argo_panels"]
                     #[wrap(Some)]
                     set_end_widget = &gtk::Frame {
+                        set_hexpand: true,
+                        //set_width_request: 300,
                         gtk::Box {
+                            gtk::ScrolledWindow {
+                            //set_min_content_width: 300,
                             set_hexpand: true,
-                            set_width_request: 200,
-                            gtk::Notebook {
-                            set_hexpand: true,
-                                // Three different syntaxes for appending pages
-                                // 1
-                                append_page[Some(&gtk::Label::new(Some("TODO")))] = &gtk::Label {
-                                    set_label: "TODO: Implement Notebook Panel",
+                            //set_hexpand: true,
+                            //set_width_request: 250,
+                            //set_width_request: 300,
+                                gtk::Notebook {
+                                    set_hexpand: true,
+                                    append_page[Some(&gtk::Label::new(Some("TODO")))] = &gtk::Label {
+                                        set_label: "TODO: Implement Notebook Panel",
+                                    },
                                 },
-
-                                // 2
-                                //append_page: (&gtk::Label::new(Some("TODO: Implement Notebook Panel")), Some(&gtk::Label::new(Some("TODO")))),
-
-                                // 3
-                                //append_page[Some(&gtk::Label::new(Some("TODO")))]:
-                                    //&gtk::Label::new(Some("TODO: Implement Notebook Panel")),
-
-                                //append_page[Some(&gtk::Label::new(Some("TODO")))]:  &gtk::Label::new(Some("TODO: Implement Notebook Panel"))
-                                //{
-                                    //set_name: "TODO: Implement Notebook Panel",
-                                    ////set_label: "TODO: Implement Notebook Panel",
-                                //}
                             },
-
-                                //append_page[gtk::Label::new(Some("TODO"))] = gtk::NotebookPage {
-                                    //set_child = gtk::Button,
-                                //}
-                                //#[name="todo"]
-                                //page = "todo",
-                                //gtk::Box {
-                                    //gtk::Label {
-                                        //set_label: "TODO: Implement Notebook Panel",
-                                    //}
-                                //}
-                            //},
-                        },
+                        }
                     }
                 },
 
