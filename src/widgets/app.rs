@@ -6,7 +6,7 @@ use crate::widgets::{
 };
 
 use gtk::prelude::{
-    BoxExt,
+    //BoxExt,
     ButtonExt,
     GtkWindowExt,
     OrientableExt,
@@ -158,9 +158,20 @@ impl SimpleComponent for App {
                         gtk::Box {
                             set_hexpand: true,
                             set_width_request: 200,
-                            gtk::Label {
-                                set_label: "TODO: Implement Notebook Panel",
-                            }
+                            gtk::Notebook {
+                                append_page[Some(&gtk::Label::new(Some("TODO")))]:  &gtk::Button::new(),
+
+                                //append_page[gtk::Label::new(Some("TODO"))] = gtk::NotebookPage {
+                                    //set_child = gtk::Button,
+                                //}
+                                //#[name="todo"]
+                                //page = "todo",
+                                //gtk::Box {
+                                    //gtk::Label {
+                                        //set_label: "TODO: Implement Notebook Panel",
+                                    //}
+                                //}
+                            },
                         },
                     }
                 },
