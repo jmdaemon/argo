@@ -97,7 +97,8 @@ impl SimpleComponent for App {
                                 set_height_request: 32,
                             },
                             model.bookmarksview.widget() {
-                                set_min_content_width: 180,
+                                //set_min_content_width: 180,
+                                set_min_content_width: 150,
                                 set_hscrollbar_policy: gtk::PolicyType::Never,
                             },
 
@@ -113,15 +114,19 @@ impl SimpleComponent for App {
 
                     #[name="filesview_panel"]
                     #[wrap(Some)]
-                    set_center_widget = &gtk::Box {
-                        set_size_request: (100, -1),
+                    set_center_widget = &gtk::Frame {
+                        //set_size_request: (100, -1),
                         //set_size_request: (400, 480),
                         set_hexpand: true,
+                        //set_halign: gtk::Align::Start,
+                        gtk::Box {
+                        set_hexpand: true,
+                        //set_halign: gtk::Align::Start,
                         set_orientation: gtk::Orientation::Vertical,
 
                         #[name="navbar"]
                         gtk::Frame {
-                            set_hexpand: true,
+                            //set_hexpand: true,
                             gtk::Box {
                                 set_orientation: gtk::Orientation::Horizontal,
                                 set_margin_all: 5,
@@ -138,20 +143,25 @@ impl SimpleComponent for App {
                         model.filesview.widget() {
                             set_min_content_width: 100,
                             set_vexpand: true,
+                            set_hexpand: true,
                             set_hscrollbar_policy: gtk::PolicyType::Never,
                         }
+                    },
                     },
 
                     #[name="argo_panels"]
                     #[wrap(Some)]
-                    set_end_widget = &gtk::Box {
-                        set_hexpand: true,
-                        //set_size_request: (400, -1),
-                        set_size_request: (300, -1),
-                        gtk::Label {
-                            set_label: "TODO: Implement Notebook Panel",
-                        }
-                    },
+                    set_end_widget = &gtk::Frame {
+                        gtk::Box {
+                            set_hexpand: true,
+                            //set_size_request: (400, -1),
+                            //set_size_request: (360, -1),
+                            set_width_request: 200,
+                            gtk::Label {
+                                set_label: "TODO: Implement Notebook Panel",
+                            }
+                        },
+                    }
                 },
 
                 #[name="statusbar"]
