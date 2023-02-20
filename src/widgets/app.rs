@@ -160,7 +160,20 @@ impl SimpleComponent for App {
                             set_width_request: 200,
                             gtk::Notebook {
                             set_hexpand: true,
-                                append_page[Some(&gtk::Label::new(Some("TODO")))]:  &gtk::Label::new(Some("TODO: Implement Notebook Panel"))
+                                // Three different syntaxes for appending pages
+                                // 1
+                                append_page[Some(&gtk::Label::new(Some("TODO")))] = &gtk::Label {
+                                    set_label: "TODO: Implement Notebook Panel",
+                                },
+
+                                // 2
+                                //append_page: (&gtk::Label::new(Some("TODO: Implement Notebook Panel")), Some(&gtk::Label::new(Some("TODO")))),
+
+                                // 3
+                                //append_page[Some(&gtk::Label::new(Some("TODO")))]:
+                                    //&gtk::Label::new(Some("TODO: Implement Notebook Panel")),
+
+                                //append_page[Some(&gtk::Label::new(Some("TODO")))]:  &gtk::Label::new(Some("TODO: Implement Notebook Panel"))
                                 //{
                                     //set_name: "TODO: Implement Notebook Panel",
                                     ////set_label: "TODO: Implement Notebook Panel",
