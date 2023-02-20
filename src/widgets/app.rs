@@ -1,7 +1,8 @@
 use crate::widgets::{
-files::{FilesView, FilesViewOutput},
+    files::{FilesView, FilesViewOutput},
     bookmarks::BookmarksView,
     toolbar::Toolbar,
+    navbar::NavigationBar,
 };
 
 use gtk::prelude::{
@@ -50,6 +51,7 @@ pub struct App {
     filesview: Controller<FilesView>,
     bookmarksview: Controller<BookmarksView>,
     toolbar: Controller<Toolbar>,
+    navbar: Controller<NavigationBar>,
 }
 
 #[component(pub)]
@@ -66,44 +68,28 @@ impl SimpleComponent for App {
 
             gtk::Box {
                 set_orientation: gtk::Orientation::Vertical,
-                //model.toolbar.widget() {
-                    //set_size_request: (100, 100),
-                //},
                 // Main App View
                 #[name="toolbar"]
                 gtk::Box {
                     set_orientation: gtk::Orientation::Horizontal,
                     set_margin_all: 5,
-                    //set_size_request: (-1, 32),
                     model.toolbar.widget() {
                         set_size_request: (-1, 32),
-                        //set_size_request: (100, 100),
-                    //set_size_request: (-1, 32),
-                    //set_size_request: (400, 32),
                     }
                 },
-                #[name="actionbar"]
-                gtk::Box {
-                    set_orientation: gtk::Orientation::Horizontal,
-                    set_margin_all: 5,
-                    set_size_request: (-1, 32),
-                },
+
+                // Main Widget
                 gtk::CenterBox {
                     set_orientation: gtk::Orientation::Horizontal,
-                    //set_size_request: (200, -1),
                     set_vexpand: true,
 
                     #[name="bookmarks_sidebar"]
                     #[wrap(Some)]
                     set_start_widget = &gtk::Box {
-                        //gtk::ScrolledWindow {
-                        //},
                         set_orientation: gtk::Orientation::Vertical,
                         model.bookmarksview.widget() {
                             set_min_content_width: 180,
                             set_hscrollbar_policy: gtk::PolicyType::Never,
-                            //set_min_content_width: 240,
-                            //set_min_content_width: 100,
                         },
 
                         gtk::Button {
@@ -118,15 +104,21 @@ impl SimpleComponent for App {
                     #[name="filesview_panel"]
                     #[wrap(Some)]
                     set_center_widget = &gtk::Box {
-                        //set_hexpand: true,
                         set_size_request: (400, -1),
-                        //gtk::Label {
-                            //set_label: "Test",
-                        //}
+                        //set_size_request: (400, 480),
+                        set_orientation: gtk::Orientation::Vertical,
+
+                        #[name="navbar"]
+                        gtk::Box {
+                            set_orientation: gtk::Orientation::Horizontal,
+                            set_margin_all: 5,
+                            set_size_request: (-1, 32),
+                            model.navbar.widget(),
+                        },
                         model.filesview.widget() {
                             set_min_content_width: 400,
+                            set_vexpand: true,
                             set_hscrollbar_policy: gtk::PolicyType::Never,
-                            //set_min_content_width: 300,
                         }
                     },
 
@@ -166,8 +158,11 @@ impl SimpleComponent for App {
 
         let toolbar = Toolbar::builder()
             .launch(()).forward(sender.input_sender(), |msg| AppMsg::GotoBookmark);
+
+        let navbar = NavigationBar::builder()
+            .launch(()).forward(sender.input_sender(), |msg| AppMsg::GotoBookmark);
         
-        let model = App { mode, filesview, bookmarksview, toolbar };
+        let model = App { mode, filesview, bookmarksview, toolbar, navbar};
         let widgets = view_output!();
         ComponentParts { model, widgets }
     }
