@@ -159,7 +159,13 @@ impl SimpleComponent for App {
                             set_hexpand: true,
                             set_width_request: 200,
                             gtk::Notebook {
-                                append_page[Some(&gtk::Label::new(Some("TODO")))]:  &gtk::Button::new(),
+                            set_hexpand: true,
+                                append_page[Some(&gtk::Label::new(Some("TODO")))]:  &gtk::Label::new(Some("TODO: Implement Notebook Panel"))
+                                //{
+                                    //set_name: "TODO: Implement Notebook Panel",
+                                    ////set_label: "TODO: Implement Notebook Panel",
+                                //}
+                            },
 
                                 //append_page[gtk::Label::new(Some("TODO"))] = gtk::NotebookPage {
                                     //set_child = gtk::Button,
@@ -171,7 +177,7 @@ impl SimpleComponent for App {
                                         //set_label: "TODO: Implement Notebook Panel",
                                     //}
                                 //}
-                            },
+                            //},
                         },
                     }
                 },
