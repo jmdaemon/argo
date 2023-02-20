@@ -142,7 +142,19 @@ impl SimpleComponent for App {
                             set_label: "TODO: Implement Notebook Panel",
                         }
                     },
-                }
+                },
+
+                #[name="statusbar"]
+                gtk::Box {
+                    set_height_request: 32,
+                    set_hexpand: true,
+                    gtk::Frame {
+                        set_hexpand: true,
+                        gtk::Label {
+                            set_label: "Status Bar",
+                        }
+                    }
+                },
             }
         }
     }
