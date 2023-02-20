@@ -70,12 +70,14 @@ impl SimpleComponent for App {
                 set_orientation: gtk::Orientation::Vertical,
                 // Main App View
                 #[name="toolbar"]
-                gtk::Box {
-                    set_orientation: gtk::Orientation::Horizontal,
-                    set_margin_all: 5,
-                    model.toolbar.widget() {
-                        set_size_request: (-1, 32),
-                    }
+                gtk::Frame {
+                    gtk::Box {
+                        set_orientation: gtk::Orientation::Horizontal,
+                        set_margin_all: 5,
+                        model.toolbar.widget() {
+                            set_size_request: (-1, 32),
+                        }
+                    },
                 },
 
                 // Main Widget
@@ -112,26 +114,29 @@ impl SimpleComponent for App {
                     #[name="filesview_panel"]
                     #[wrap(Some)]
                     set_center_widget = &gtk::Box {
-                        set_size_request: (200, -1),
+                        set_size_request: (100, -1),
                         //set_size_request: (400, 480),
                         set_hexpand: true,
                         set_orientation: gtk::Orientation::Vertical,
 
                         #[name="navbar"]
-                        gtk::Box {
-                            set_orientation: gtk::Orientation::Horizontal,
-                            set_margin_all: 5,
-                            set_height_request: 32,
-                            //set_size_request: (-1, 32),
-                            //set_hexpand: true,
+                        gtk::Frame {
+                            set_hexpand: true,
+                            gtk::Box {
+                                set_orientation: gtk::Orientation::Horizontal,
+                                set_margin_all: 5,
+                                set_height_request: 32,
+                                //set_size_request: (-1, 32),
+                                //set_hexpand: true,
 
-                            model.navbar.widget(),
-                            gtk::SearchEntry {
-                                set_hexpand: true,
-                            }
+                                model.navbar.widget(),
+                                gtk::SearchEntry {
+                                    set_hexpand: true,
+                                }
+                            },
                         },
                         model.filesview.widget() {
-                            set_min_content_width: 200,
+                            set_min_content_width: 100,
                             set_vexpand: true,
                             set_hscrollbar_policy: gtk::PolicyType::Never,
                         }
@@ -141,7 +146,8 @@ impl SimpleComponent for App {
                     #[wrap(Some)]
                     set_end_widget = &gtk::Box {
                         set_hexpand: true,
-                        set_size_request: (400, -1),
+                        //set_size_request: (400, -1),
+                        set_size_request: (300, -1),
                         gtk::Label {
                             set_label: "TODO: Implement Notebook Panel",
                         }
