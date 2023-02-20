@@ -87,6 +87,10 @@ impl SimpleComponent for App {
                     #[wrap(Some)]
                     set_start_widget = &gtk::Box {
                         set_orientation: gtk::Orientation::Vertical,
+                        gtk::Label {
+                            set_label: "Bookmarks",
+                            set_height_request: 32,
+                        },
                         model.bookmarksview.widget() {
                             set_min_content_width: 180,
                             set_hscrollbar_policy: gtk::PolicyType::Never,
@@ -104,7 +108,7 @@ impl SimpleComponent for App {
                     #[name="filesview_panel"]
                     #[wrap(Some)]
                     set_center_widget = &gtk::Box {
-                        set_size_request: (300, -1),
+                        set_size_request: (200, -1),
                         //set_size_request: (400, 480),
                         set_hexpand: true,
                         set_orientation: gtk::Orientation::Vertical,
@@ -123,7 +127,7 @@ impl SimpleComponent for App {
                             }
                         },
                         model.filesview.widget() {
-                            set_min_content_width: 300,
+                            set_min_content_width: 200,
                             set_vexpand: true,
                             set_hscrollbar_policy: gtk::PolicyType::Never,
                         }
@@ -133,7 +137,7 @@ impl SimpleComponent for App {
                     #[wrap(Some)]
                     set_end_widget = &gtk::Box {
                         set_hexpand: true,
-                        set_size_request: (240, -1),
+                        set_size_request: (400, -1),
                         gtk::Label {
                             set_label: "TODO: Implement Notebook Panel",
                         }
