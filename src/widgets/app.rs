@@ -85,23 +85,27 @@ impl SimpleComponent for App {
 
                     #[name="bookmarks_sidebar"]
                     #[wrap(Some)]
-                    set_start_widget = &gtk::Box {
+                    set_start_widget = &gtk::Frame {
+                        gtk::Box {
                         set_orientation: gtk::Orientation::Vertical,
-                        gtk::Label {
-                            set_label: "Bookmarks",
-                            set_height_request: 32,
-                        },
-                        model.bookmarksview.widget() {
-                            set_min_content_width: 180,
-                            set_hscrollbar_policy: gtk::PolicyType::Never,
-                        },
-
-                        gtk::Button {
-                            set_label: "Quit",
-                            // Emit quit signal
-                            connect_clicked[sender] => move |_| {
-                                sender.input(AppMsg::Close);
+                            set_hexpand: true,
+                            set_vexpand: true,
+                            gtk::Label {
+                                set_label: "Bookmarks",
+                                set_height_request: 32,
                             },
+                            model.bookmarksview.widget() {
+                                set_min_content_width: 180,
+                                set_hscrollbar_policy: gtk::PolicyType::Never,
+                            },
+
+                            gtk::Button {
+                                set_label: "Quit",
+                                // Emit quit signal
+                                connect_clicked[sender] => move |_| {
+                                    sender.input(AppMsg::Close);
+                                },
+                            }
                         }
                     },
 
